@@ -4,10 +4,11 @@ import seaborn as sns
 import numpy as np
 import warnings
 
+from sklearn import tree
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler, OneHotEncoder, label_binarize
 from sklearn.model_selection import train_test_split, cross_val_score, KFold, GridSearchCV
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_curve, roc_auc_score
-from sklearn.tree import DecisionTreeClassifier, tree
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.impute import KNNImputer
 from sklearn.naive_bayes import GaussianNB
 from sklearn.decomposition import PCA
