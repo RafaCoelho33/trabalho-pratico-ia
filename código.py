@@ -274,27 +274,6 @@ plt.ylabel('Segundo Componente Principal')
 
 plt.show()
 
-
-# Criando o modelo XGBoost
-model = XGBClassifier()
-model.fit(X_treino, y_treino) 
-y_pred = model.predict(X_teste)
-
-# Avaliando o desempenho do modelo
-print("Relatório de Classificação:\n", classification_report(y_teste, y_pred))
-print("Acurácia:", accuracy_score(y_teste, y_pred))
-
-kfold = KFold(n_splits=10, shuffle=True, random_state=42)
-scores = cross_val_score(model, x, y, cv=kfold, scoring='accuracy')
-
-gradientBoostingAccuracy = scores.mean()
-print(f'Acurácia: {gradientBoostingAccuracy}')
-
-print(f'Acurácia para cada fold: {scores}')
-print(f'Acurácia média: {scores.mean()}')
-
-
-
 # Matriz de Confusão
 cm = confusion_matrix(y_teste, y_pred)
 
@@ -309,17 +288,16 @@ plt.show()
 modelo1 = DecisionTreeClassifier()
 modelo2 = RandomForestClassifier()
 modelo3 = GaussianNB()
-modelo4 = GradientBoostingClassifier()
 
 # Acurácias dos modelos
-acuracias_modelos = [decisionTreeAccuracy, randomForestAccuracy, naiveBayesAccuracy, gradientBoostingAccuracy]
+acuracias_modelos = [decisionTreeAccuracy, randomForestAccuracy, naiveBayesAccuracy]
 
 acuracias_array = np.array(acuracias_modelos)
 
 # Realize o teste t pareado para todas as combinações possíveis de pares de modelos
 for i in range(len(acuracias_modelos)):
     for j in range(i + 1, len(acuracias_modelos)):
-        t, p = paired_ttest_5x2cv(estimator1=[modelo1, modelo2, modelo3, modelo4][i], estimator2=[modelo1, modelo2, modelo3, modelo4][j], X=x, y=y)
+        t, p = paired_ttest_5x2cv(estimator1=[modelo1, modelo2, modelo3][i], estimator2=[modelo1, modelo2, modelo3][j], X=x, y=y)
         alpha = 0.05
 
         print(f'Testando Modelo{i + 1} vs Modelo{j + 1}:')
